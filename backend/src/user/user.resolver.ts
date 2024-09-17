@@ -53,8 +53,8 @@ export class UserResolver {
     }
   }
 
-  @Query(() => String)
+  @Query(() => [User])
   async getUsers() {
-    return 'Hello World';
+    return this.userService.getUsers();
   }
 }

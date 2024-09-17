@@ -22,24 +22,30 @@ function Login() {
 
   const handleLogin = async () => {
     setErrors({});
-
-    await loginUser({
-      variables: {
-        email: loginData.email,
-        password: loginData.password,
-      },
-    }).catch((err) => {
-      if (err.graphQLErrors[0].extensions?.invalidCredentials) {
+    try {
+      const response = await loginUser({
+        variables: {
+          email: loginData.email,
+          password: loginData.password,
+        },
+      });
+      if (response && response.data) {
+        setUser(response.data.login.user);
+      }
+      setLoginOpen(false);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+      if (error && error.graphQLErrors[0].extensions?.invalidCredentials) {
         setInvalidCredentials(
-          err.graphQLErrors[0].extensions.invalidCredentials
+          error.graphQLErrors[0].extensions.invalidCredentials as string
         );
       } else {
-        setErrors(err.graphQLErrors[0].extensions);
+        if (error) {
+          setErrors(
+            error.graphQLErrors[0].extensions as GraphQLErrorExtensions
+          );
+        }
       }
-    });
-    if (data?.login.user) {
-      setUser(data.login.user);
-      setLoginOpen(false);
     }
   };
 

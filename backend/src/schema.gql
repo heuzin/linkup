@@ -30,7 +30,7 @@ type Mutation {
 }
 
 type Query {
-  getUsers: String!
+  getUsers: [User!]!
 }
 
 input RegisterDto {
