@@ -14,7 +14,7 @@ import { PostDetails } from './post.model';
 export class PostService {
   constructor(private readonly prsima: PrismaService) {}
 
-  async saveVide(video: {
+  async saveVideo(video: {
     createReadStream: () => any;
     filename: string;
     mimetype: string;
@@ -26,7 +26,7 @@ export class PostService {
     }
 
     const videoName = `${Date.now()}${extname(video.filename)}`;
-    const videoPath = `/file/${videoName}`;
+    const videoPath = `/files/${videoName}`;
     const stream = video.createReadStream();
     const outputPath = `public${videoPath}`;
     const writeStream = createWriteStream(outputPath);

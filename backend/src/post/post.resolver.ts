@@ -3,7 +3,7 @@ import { Mutation, Args, Context, Query, Int } from '@nestjs/graphql';
 import { PostService } from './post.service';
 import { Post, PostDetails } from './post.model';
 import { Request } from 'express';
-import * as GraphQLUpload from 'graphql-upload/GraphQLUPload.js';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import { UseGuards } from '@nestjs/common';
 import { GraphqlAuthGuard } from 'src/auth/graphql-auth.guard';
 
@@ -15,11 +15,11 @@ export class PostResolver {
   @Mutation(() => Post)
   async createPost(
     @Context() context: { req: Request },
-    @Args({ name: 'vider', type: () => GraphQLUpload }) video: any,
+    @Args({ name: 'video', type: () => GraphQLUpload }) video: any,
     @Args('text') text: string,
   ) {
     const userId = context.req.user.sub;
-    const videoPath = await this.postService.saveVide(video);
+    const videoPath = await this.postService.saveVideo(video);
     const postData = {
       text,
       video: videoPath,
