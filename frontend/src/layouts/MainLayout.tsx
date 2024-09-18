@@ -5,7 +5,7 @@ import SideNav from "../components/SideNav";
 
 function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div>
       <header>
         <TopNav />
       </header>
@@ -20,7 +20,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         </div>
         {children}
       </div>
-    </>
+    </div>
   );
 }
 
