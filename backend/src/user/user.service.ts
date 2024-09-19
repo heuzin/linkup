@@ -12,4 +12,18 @@ export class UserService {
       },
     });
   }
+
+  async updateProfile(
+    userId: number,
+    data: { fullname?: string; bio?: string; image?: string },
+  ) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        fullname: data.fullname,
+        bio: data.bio,
+        image: data.image,
+      },
+    });
+  }
 }

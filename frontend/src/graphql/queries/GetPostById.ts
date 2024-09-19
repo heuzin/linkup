@@ -11,6 +11,7 @@ export const GET_POST_BY_ID = gql`
         id
         email
         fullname
+        image
       }
       likes {
         id

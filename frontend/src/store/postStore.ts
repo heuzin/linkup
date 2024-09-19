@@ -17,7 +17,6 @@ export const usePostStore = create<PostState>()(
       likedPosts: [],
       likePost: (post) => {
         set((state) => {
-          console.log("likedPosts", state.likedPosts);
           return { likedPosts: [...state.likedPosts, post] };
         });
       },
@@ -27,7 +26,7 @@ export const usePostStore = create<PostState>()(
         })),
     }),
     {
-      name: "post-storage", // unique name for local storage key
+      name: "post-storage",
     }
   )
 );

@@ -9,6 +9,7 @@ import {
 
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import { onError } from "@apollo/client/link/error";
+import { useUserStore } from "../store/userStore";
 
 async function refreshToken(client: ApolloClient<NormalizedCacheObject>) {
   try {
@@ -21,7 +22,6 @@ async function refreshToken(client: ApolloClient<NormalizedCacheObject>) {
     });
 
     const newAccessToken = data?.refreshToken;
-    console.log("newAccessToken", newAccessToken);
     if (!newAccessToken) {
       throw new Error("New access token not received.");
     }
@@ -37,22 +37,25 @@ let retryCount = 0;
 const maxRetry = 3;
 
 const errorLink = onError(({ graphQLErrors, operation, forward }) => {
-  const operationName = operation.operationName;
-  console.log(operationName, "operationName");
-  // if (["LoginUser", "RegisterUser"].includes(operationName)) {
-  //   console.log("Login or Register operation")
-  //   return forward(operation)
-  // }
-
   if (graphQLErrors) {
     for (const err of graphQLErrors) {
       if (err.extensions?.code === "UNAUTHENTICATED" && retryCount < maxRetry) {
+        if (
+          err.extensions.originalError.message === "Refresh token not found"
+        ) {
+          useUserStore.setState({
+            id: undefined,
+            fullname: "",
+            email: "",
+            bio: "",
+            image: "",
+          });
+        }
         retryCount++;
 
         return new Observable((observer) => {
           refreshToken(client)
             .then((token) => {
-              console.log("token", token);
               operation.setContext((previousContext: any) => ({
                 headers: {
                   ...previousContext.headers,

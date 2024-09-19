@@ -82,7 +82,6 @@ function EditProfileOverlay() {
           },
         })
           .then((res) => {
-            console.log(data, "data!");
             setUser({
               id: Number(res.data?.updateUserProfile.id),
               fullname: username,
