@@ -268,7 +268,7 @@ function Post() {
           >
             <video
               ref={video}
-              src={"http://localhost:3000/" + dataPost.getPostById.video}
+              src={import.meta.env.VITE_DB_URL + dataPost.getPostById.video}
               loop
               muted
               className="h-screen mx-auto"

@@ -62,7 +62,7 @@ function PostFeed({ post }: { post: Post }) {
             <video
               onClick={handleNavigate}
               ref={video}
-              src={"http://localhost:3000/" + post.video}
+              src={import.meta.env.VITE_DB_URL + post.video}
               loop
               muted
               className="rounded-xl object-cover mx-auto h-full"

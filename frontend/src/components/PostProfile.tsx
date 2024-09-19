@@ -56,7 +56,7 @@ function PostProfile({ post }: { post: Post }) {
             muted
             loop
             className="aspect-[3/4] object-cover rounded-md"
-            src={"http://localhost:3000/" + post.video}
+            src={import.meta.env.VITE_DB_URL + post.video}
           />
         </div>
         <div className="px-1">
